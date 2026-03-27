@@ -1,6 +1,6 @@
 :root {
 	--font-display: 'DM Sans', -apple-system, sans-serif;
-	--font-mono: 'Space Mono', monospace;
+	--font-mono: 'IBM Plex Mono', 'SF Mono', monospace;
 	--bg: #FAFAFA;
 	--fg: #1a1a1a;
 	--fg-muted: #666;

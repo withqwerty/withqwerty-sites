@@ -20,11 +20,20 @@
 .q-btn.active-blue { background: #1565C0; border-color: #1565C0; color: white; }
 .q-result { margin-top: 1.25rem; padding-top: 1.25rem; border-top: 1px solid #e5e5e5; }
 .q-result[hidden] { display: none; }
-.q-result-title { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #2D6A4F; margin-bottom: 0.5rem; }
-.q-step { margin-bottom: 0.75rem; }
-.q-step-num { display: inline-flex; align-items: center; justify-content: center; width: 1.4rem; height: 1.4rem; border-radius: 50%; background: #2D6A4F; color: white; font-size: 0.7rem; font-weight: 700; margin-right: 0.4rem; vertical-align: middle; }
+.q-result-title { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #2D6A4F; margin-bottom: 0.75rem; }
+.q-step { margin-bottom: 1.25rem; }
+.q-step-head { display: flex; align-items: center; gap: 0.4rem; margin-bottom: 0.3rem; }
+.q-step-num { display: inline-flex; align-items: center; justify-content: center; width: 1.4rem; height: 1.4rem; border-radius: 50%; background: #2D6A4F; color: white; font-size: 0.7rem; font-weight: 700; flex-shrink: 0; }
 .q-step-num.blue { background: #1565C0; }
-.q-step p { font-size: 0.9rem; color: #666; margin-top: 0.2rem; padding-left: 2rem; }
+.q-step-label { font-size: 0.9rem; font-weight: 500; }
+.q-code-row { display: flex; align-items: center; gap: 0.5rem; background: #f5f5f5; border: 1px solid #e5e5e5; border-radius: 8px; padding: 0.5rem 0.75rem; margin-top: 0.35rem; margin-left: 1.8rem; }
+.q-code-row code { font-family: 'IBM Plex Mono', 'SF Mono', monospace; font-size: 0.8rem; color: #1a1a1a; background: none; padding: 0; flex: 1; white-space: nowrap; overflow-x: auto; }
+.q-copy-btn { background: none; border: none; color: #999; cursor: pointer; padding: 0.2rem; border-radius: 4px; display: flex; align-items: center; flex-shrink: 0; transition: color 0.15s; }
+.q-copy-btn:hover { color: #1a1a1a; }
+.q-copy-btn .check { display: none; }
+.q-copy-btn.copied .copy { display: none; }
+.q-copy-btn.copied .check { display: block; color: #2D6A4F; }
+.q-step p { font-size: 0.85rem; color: #666; margin-top: 0.25rem; padding-left: 1.8rem; }
 .q-note { font-size: 0.85rem; color: #666; margin-top: 0.75rem; padding: 0.6rem 0.8rem; background: #FAFAFA; border-radius: 8px; }
 </style>
 
@@ -52,88 +61,161 @@
     </div>
   </div>
 
+  <!-- Claude Code — Full -->
   <div class="q-result" id="result-claude-code-full" hidden>
     <div class="q-result-title">Your setup</div>
-    <div class="q-step"><span class="q-step-num">1</span> <code>/plugin install nutmeg@withqwerty/nutmeg</code></div>
-    <p>Run this in Claude Code. Installs 12 skills, 3 agents, and the football-docs MCP server.</p>
-    <div class="q-step"><span class="q-step-num">2</span> <code>/nutmeg-init</code></div>
-    <p>Set up your profile. Everything adapts to your language, data sources, and experience level.</p>
-    <div class="q-note">That's it. Type <code>/nutmeg-</code> to see all commands.</div>
+    <div class="q-step">
+      <div class="q-step-head"><span class="q-step-num">1</span> <span class="q-step-label">Install the plugin</span></div>
+      <div class="q-code-row"><code>/plugin install nutmeg@withqwerty/nutmeg</code><button class="q-copy-btn" data-cmd="/plugin install nutmeg@withqwerty/nutmeg"><svg class="copy" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.5"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.5"/></svg><svg class="check" width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3.5 3.5 6.5-8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+      <p>Installs 12 skills, 3 agents, and the football-docs MCP server.</p>
+    </div>
+    <div class="q-step">
+      <div class="q-step-head"><span class="q-step-num">2</span> <span class="q-step-label">Set up your profile</span></div>
+      <div class="q-code-row"><code>/nutmeg-init</code><button class="q-copy-btn" data-cmd="/nutmeg-init"><svg class="copy" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.5"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.5"/></svg><svg class="check" width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3.5 3.5 6.5-8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+      <p>Tells nutmeg about your language, data sources, and experience. Everything adapts accordingly.</p>
+    </div>
+    <div class="q-note">That's it. Type <code>/nutmeg-</code> to see all commands, or just describe what you need in plain English.</div>
   </div>
 
+  <!-- Claude Code — Docs only -->
   <div class="q-result" id="result-claude-code-docs-only" hidden>
     <div class="q-result-title">Your setup</div>
-    <div class="q-step"><span class="q-step-num blue">1</span> <code>claude mcp add football-docs -- npx -y football-docs</code></div>
-    <p>Adds the docs server to Claude Code. Your agent gets search_docs, list_providers, compare_providers, and request_update.</p>
+    <div class="q-step">
+      <div class="q-step-head"><span class="q-step-num blue">1</span> <span class="q-step-label">Add the docs server</span></div>
+      <div class="q-code-row"><code>claude mcp add football-docs -- npx -y football-docs</code><button class="q-copy-btn" data-cmd="claude mcp add football-docs -- npx -y football-docs"><svg class="copy" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.5"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.5"/></svg><svg class="check" width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3.5 3.5 6.5-8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+      <p>Your agent gets search_docs, list_providers, compare_providers, and request_update.</p>
+    </div>
     <div class="q-note">No plugin needed. Ask Claude things like "What is Opta qualifier 76?" and it'll look it up.</div>
   </div>
 
+  <!-- Claude Code — Explore -->
   <div class="q-result" id="result-claude-code-explore" hidden>
     <div class="q-result-title">Start with the docs server</div>
-    <div class="q-step"><span class="q-step-num blue">1</span> <code>claude mcp add football-docs -- npx -y football-docs</code></div>
-    <p>Try asking your agent football data questions. Want the full toolkit later? Run <code>/plugin install nutmeg@withqwerty/nutmeg</code>.</p>
+    <div class="q-step">
+      <div class="q-step-head"><span class="q-step-num blue">1</span> <span class="q-step-label">Add the docs server</span></div>
+      <div class="q-code-row"><code>claude mcp add football-docs -- npx -y football-docs</code><button class="q-copy-btn" data-cmd="claude mcp add football-docs -- npx -y football-docs"><svg class="copy" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.5"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.5"/></svg><svg class="check" width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3.5 3.5 6.5-8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+      <p>Try asking your agent football data questions. Want the full toolkit later? Run <code>/plugin install nutmeg@withqwerty/nutmeg</code>.</p>
+    </div>
   </div>
 
+  <!-- Cursor — Full -->
   <div class="q-result" id="result-cursor-full" hidden>
     <div class="q-result-title">Your setup</div>
-    <div class="q-step"><span class="q-step-num blue">1</span> Add to Cursor MCP settings:</div>
-    <p><code>&#123;"mcpServers": &#123;"football-docs": &#123;"command": "npx", "args": ["-y", "football-docs"]&#125;&#125;&#125;</code></p>
-    <div class="q-step"><span class="q-step-num">2</span> <code>npx skills add withqwerty/nutmeg</code></div>
-    <p>Installs the 12 skills via the Agent Skills standard.</p>
+    <div class="q-step">
+      <div class="q-step-head"><span class="q-step-num blue">1</span> <span class="q-step-label">Add to Cursor MCP settings:</span></div>
+      <div class="q-code-row"><code>&#123;"mcpServers": &#123;"football-docs": &#123;"command": "npx", "args": ["-y", "football-docs"]&#125;&#125;&#125;</code><button class="q-copy-btn" data-cmd='{"mcpServers": {"football-docs": {"command": "npx", "args": ["-y", "football-docs"]}}}'><svg class="copy" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.5"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.5"/></svg><svg class="check" width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3.5 3.5 6.5-8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+    </div>
+    <div class="q-step">
+      <div class="q-step-head"><span class="q-step-num">2</span> <span class="q-step-label">Install skills</span></div>
+      <div class="q-code-row"><code>npx skills add withqwerty/nutmeg</code><button class="q-copy-btn" data-cmd="npx skills add withqwerty/nutmeg"><svg class="copy" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.5"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.5"/></svg><svg class="check" width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3.5 3.5 6.5-8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+      <p>Installs the 12 skills via the Agent Skills standard.</p>
+    </div>
+    <div class="q-step">
+      <div class="q-step-head"><span class="q-step-num">3</span> <span class="q-step-label">Initialise nutmeg</span></div>
+      <p>Tell your AI: "set up nutmeg" or "initialise nutmeg". It'll ask about your language, data sources, and experience.</p>
+    </div>
   </div>
 
+  <!-- Cursor — Docs only -->
   <div class="q-result" id="result-cursor-docs-only" hidden>
     <div class="q-result-title">Your setup</div>
-    <div class="q-step"><span class="q-step-num blue">1</span> Settings &rarr; MCP &rarr; Add server:</div>
-    <p><code>&#123;"mcpServers": &#123;"football-docs": &#123;"command": "npx", "args": ["-y", "football-docs"]&#125;&#125;&#125;</code></p>
+    <div class="q-step">
+      <div class="q-step-head"><span class="q-step-num blue">1</span> <span class="q-step-label">Settings &rarr; MCP &rarr; Add server:</span></div>
+      <div class="q-code-row"><code>&#123;"mcpServers": &#123;"football-docs": &#123;"command": "npx", "args": ["-y", "football-docs"]&#125;&#125;&#125;</code><button class="q-copy-btn" data-cmd='{"mcpServers": {"football-docs": {"command": "npx", "args": ["-y", "football-docs"]}}}'><svg class="copy" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.5"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.5"/></svg><svg class="check" width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3.5 3.5 6.5-8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+    </div>
   </div>
 
+  <!-- VS Code — Full -->
   <div class="q-result" id="result-vscode-full" hidden>
     <div class="q-result-title">Your setup</div>
-    <div class="q-step"><span class="q-step-num blue">1</span> Add to <code>.vscode/mcp.json</code>:</div>
-    <p><code>&#123;"servers": &#123;"football-docs": &#123;"command": "npx", "args": ["-y", "football-docs"]&#125;&#125;&#125;</code></p>
-    <div class="q-step"><span class="q-step-num">2</span> <code>npx skills add withqwerty/nutmeg</code></div>
-    <p>Installs the 12 skills via the Agent Skills standard.</p>
+    <div class="q-step">
+      <div class="q-step-head"><span class="q-step-num blue">1</span> <span class="q-step-label">Add to <code>.vscode/mcp.json</code>:</span></div>
+      <div class="q-code-row"><code>&#123;"servers": &#123;"football-docs": &#123;"command": "npx", "args": ["-y", "football-docs"]&#125;&#125;&#125;</code><button class="q-copy-btn" data-cmd='{"servers": {"football-docs": {"command": "npx", "args": ["-y", "football-docs"]}}}'><svg class="copy" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.5"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.5"/></svg><svg class="check" width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3.5 3.5 6.5-8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+    </div>
+    <div class="q-step">
+      <div class="q-step-head"><span class="q-step-num">2</span> <span class="q-step-label">Install skills</span></div>
+      <div class="q-code-row"><code>npx skills add withqwerty/nutmeg</code><button class="q-copy-btn" data-cmd="npx skills add withqwerty/nutmeg"><svg class="copy" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.5"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.5"/></svg><svg class="check" width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3.5 3.5 6.5-8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+      <p>Installs the 12 skills via the Agent Skills standard.</p>
+    </div>
+    <div class="q-step">
+      <div class="q-step-head"><span class="q-step-num">3</span> <span class="q-step-label">Initialise nutmeg</span></div>
+      <p>Tell your AI: "set up nutmeg" or "initialise nutmeg". It'll ask about your language, data sources, and experience.</p>
+    </div>
   </div>
 
+  <!-- VS Code — Docs only -->
   <div class="q-result" id="result-vscode-docs-only" hidden>
     <div class="q-result-title">Your setup</div>
-    <div class="q-step"><span class="q-step-num blue">1</span> Add to <code>.vscode/mcp.json</code>:</div>
-    <p><code>&#123;"servers": &#123;"football-docs": &#123;"command": "npx", "args": ["-y", "football-docs"]&#125;&#125;&#125;</code></p>
+    <div class="q-step">
+      <div class="q-step-head"><span class="q-step-num blue">1</span> <span class="q-step-label">Add to <code>.vscode/mcp.json</code>:</span></div>
+      <div class="q-code-row"><code>&#123;"servers": &#123;"football-docs": &#123;"command": "npx", "args": ["-y", "football-docs"]&#125;&#125;&#125;</code><button class="q-copy-btn" data-cmd='{"servers": {"football-docs": {"command": "npx", "args": ["-y", "football-docs"]}}}'><svg class="copy" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.5"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.5"/></svg><svg class="check" width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3.5 3.5 6.5-8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+    </div>
   </div>
 
+  <!-- Windsurf — Full -->
   <div class="q-result" id="result-windsurf-full" hidden>
     <div class="q-result-title">Your setup</div>
-    <div class="q-step"><span class="q-step-num blue">1</span> Add to <code>~/.codeium/windsurf/mcp_config.json</code>:</div>
-    <p><code>&#123;"mcpServers": &#123;"football-docs": &#123;"command": "npx", "args": ["-y", "football-docs"]&#125;&#125;&#125;</code></p>
-    <div class="q-step"><span class="q-step-num">2</span> <code>npx skills add withqwerty/nutmeg</code></div>
-    <p>Installs the 12 skills via the Agent Skills standard.</p>
+    <div class="q-step">
+      <div class="q-step-head"><span class="q-step-num blue">1</span> <span class="q-step-label">Add to <code>~/.codeium/windsurf/mcp_config.json</code>:</span></div>
+      <div class="q-code-row"><code>&#123;"mcpServers": &#123;"football-docs": &#123;"command": "npx", "args": ["-y", "football-docs"]&#125;&#125;&#125;</code><button class="q-copy-btn" data-cmd='{"mcpServers": {"football-docs": {"command": "npx", "args": ["-y", "football-docs"]}}}'><svg class="copy" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.5"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.5"/></svg><svg class="check" width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3.5 3.5 6.5-8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+    </div>
+    <div class="q-step">
+      <div class="q-step-head"><span class="q-step-num">2</span> <span class="q-step-label">Install skills</span></div>
+      <div class="q-code-row"><code>npx skills add withqwerty/nutmeg</code><button class="q-copy-btn" data-cmd="npx skills add withqwerty/nutmeg"><svg class="copy" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.5"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.5"/></svg><svg class="check" width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3.5 3.5 6.5-8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+      <p>Installs the 12 skills via the Agent Skills standard.</p>
+    </div>
+    <div class="q-step">
+      <div class="q-step-head"><span class="q-step-num">3</span> <span class="q-step-label">Initialise nutmeg</span></div>
+      <p>Tell your AI: "set up nutmeg" or "initialise nutmeg". It'll ask about your language, data sources, and experience.</p>
+    </div>
   </div>
 
+  <!-- Windsurf — Docs only -->
   <div class="q-result" id="result-windsurf-docs-only" hidden>
     <div class="q-result-title">Your setup</div>
-    <div class="q-step"><span class="q-step-num blue">1</span> Add to <code>~/.codeium/windsurf/mcp_config.json</code>:</div>
-    <p><code>&#123;"mcpServers": &#123;"football-docs": &#123;"command": "npx", "args": ["-y", "football-docs"]&#125;&#125;&#125;</code></p>
+    <div class="q-step">
+      <div class="q-step-head"><span class="q-step-num blue">1</span> <span class="q-step-label">Add to <code>~/.codeium/windsurf/mcp_config.json</code>:</span></div>
+      <div class="q-code-row"><code>&#123;"mcpServers": &#123;"football-docs": &#123;"command": "npx", "args": ["-y", "football-docs"]&#125;&#125;&#125;</code><button class="q-copy-btn" data-cmd='{"mcpServers": {"football-docs": {"command": "npx", "args": ["-y", "football-docs"]}}}'><svg class="copy" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.5"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.5"/></svg><svg class="check" width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3.5 3.5 6.5-8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+    </div>
   </div>
 
+  <!-- Other — Full -->
   <div class="q-result" id="result-other-full" hidden>
     <div class="q-result-title">Your setup</div>
-    <div class="q-step"><span class="q-step-num blue">1</span> Add <code>npx -y football-docs</code> as an MCP server (stdio transport)</div>
-    <p>Check your tool's docs for how to configure MCP servers.</p>
-    <div class="q-step"><span class="q-step-num">2</span> <code>npx skills add withqwerty/nutmeg</code></div>
-    <p>Skills work with any tool supporting the <a href="https://agentskills.io">Agent Skills</a> standard.</p>
+    <div class="q-step">
+      <div class="q-step-head"><span class="q-step-num blue">1</span> <span class="q-step-label">Add MCP server (stdio transport)</span></div>
+      <div class="q-code-row"><code>npx -y football-docs</code><button class="q-copy-btn" data-cmd="npx -y football-docs"><svg class="copy" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.5"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.5"/></svg><svg class="check" width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3.5 3.5 6.5-8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+      <p>Check your tool's docs for how to configure MCP servers.</p>
+    </div>
+    <div class="q-step">
+      <div class="q-step-head"><span class="q-step-num">2</span> <span class="q-step-label">Install skills</span></div>
+      <div class="q-code-row"><code>npx skills add withqwerty/nutmeg</code><button class="q-copy-btn" data-cmd="npx skills add withqwerty/nutmeg"><svg class="copy" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.5"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.5"/></svg><svg class="check" width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3.5 3.5 6.5-8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+      <p>Skills work with any tool supporting the <a href="https://agentskills.io">Agent Skills</a> standard.</p>
+    </div>
+    <div class="q-step">
+      <div class="q-step-head"><span class="q-step-num">3</span> <span class="q-step-label">Initialise nutmeg</span></div>
+      <p>Tell your AI: "set up nutmeg" or "initialise nutmeg". It'll ask about your language, data sources, and experience.</p>
+    </div>
   </div>
 
+  <!-- Other — Docs only -->
   <div class="q-result" id="result-other-docs-only" hidden>
     <div class="q-result-title">Your setup</div>
-    <div class="q-step"><span class="q-step-num blue">1</span> Add <code>npx -y football-docs</code> as an MCP server (stdio transport)</div>
-    <p>Any MCP-compatible tool can connect.</p>
+    <div class="q-step">
+      <div class="q-step-head"><span class="q-step-num blue">1</span> <span class="q-step-label">Add MCP server (stdio transport)</span></div>
+      <div class="q-code-row"><code>npx -y football-docs</code><button class="q-copy-btn" data-cmd="npx -y football-docs"><svg class="copy" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.5"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.5"/></svg><svg class="check" width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3.5 3.5 6.5-8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+      <p>Any MCP-compatible tool can connect.</p>
+    </div>
   </div>
 
+  <!-- Generic explore -->
   <div class="q-result" id="result-generic-explore" hidden>
     <div class="q-result-title">Start with the docs server</div>
-    <div class="q-step"><span class="q-step-num blue">1</span> Add <code>npx -y football-docs</code> as an MCP server in your tool's settings</div>
-    <p>Try asking your agent football data questions. Want skills too? Run <code>npx skills add withqwerty/nutmeg</code>.</p>
+    <div class="q-step">
+      <div class="q-step-head"><span class="q-step-num blue">1</span> <span class="q-step-label">Add MCP server</span></div>
+      <div class="q-code-row"><code>npx -y football-docs</code><button class="q-copy-btn" data-cmd="npx -y football-docs"><svg class="copy" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.5"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.5"/></svg><svg class="check" width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3.5 3.5 6.5-8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+      <p>Add this as an MCP server in your tool's settings. Try asking football data questions. Want skills too? Run <code>npx skills add withqwerty/nutmeg</code>.</p>
+    </div>
   </div>
 </div>
 
@@ -160,6 +242,13 @@ document.querySelectorAll('.q-btn').forEach(function(btn) {
     var id = 'result-' + toolChoice + '-' + goalChoice;
     var el = document.getElementById(id);
     if (el) el.hidden = false;
+  });
+});
+document.querySelectorAll('.q-copy-btn').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    navigator.clipboard.writeText(btn.dataset.cmd);
+    btn.classList.add('copied');
+    setTimeout(function() { btn.classList.remove('copied'); }, 1500);
   });
 });
 </script>
