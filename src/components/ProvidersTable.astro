@@ -1,0 +1,63 @@
+---
+type Dot = 'yes' | 'no' | 'partial';
+
+interface Props {
+	providers: Array<{
+		name: string;
+		events: Dot;
+		stats: Dot;
+		xg: Dot;
+		free: Dot;
+		freeNote?: string;
+	}>;
+}
+
+const { providers } = Astro.props;
+---
+
+<table class="providers-table">
+	<thead>
+		<tr><th>Provider</th><th>Events</th><th>Stats</th><th>xG</th><th>Free?</th></tr>
+	</thead>
+	<tbody>
+		{providers.map((p) => (
+			<tr>
+				<td>{p.name}</td>
+				<td><span class={`dot dot-${p.events}`} /></td>
+				<td><span class={`dot dot-${p.stats}`} /></td>
+				<td><span class={`dot dot-${p.xg}`} /></td>
+				<td><span class={`dot dot-${p.free}`} />{p.freeNote ? ` ${p.freeNote}` : ''}</td>
+			</tr>
+		))}
+	</tbody>
+</table>
+
+<style>
+	.providers-table {
+		width: 100%;
+		border-collapse: collapse;
+		margin-bottom: 2rem;
+		font-size: 0.9rem;
+	}
+
+	.providers-table th {
+		text-align: left;
+		font-size: 0.75rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.06em;
+		color: var(--fg-muted);
+		padding: 0.5rem 0.75rem;
+		border-bottom: 2px solid var(--border);
+	}
+
+	.providers-table td {
+		padding: 0.5rem 0.75rem;
+		border-bottom: 1px solid var(--border);
+	}
+
+	.dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; }
+	.dot-yes { background: var(--green); }
+	.dot-no { background: #ddd; }
+	.dot-partial { background: #B7E4C7; }
+</style>

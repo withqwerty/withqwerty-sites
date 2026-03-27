@@ -1,0 +1,48 @@
+---
+interface Props {
+	tools: Array<{ name: string; desc: string }>;
+}
+
+const { tools } = Astro.props;
+---
+
+<div class="tools-row">
+	{tools.map(({ name, desc }) => (
+		<div class="tool-card">
+			<div class="tool-name">{name}</div>
+			<div class="tool-desc">{desc}</div>
+		</div>
+	))}
+</div>
+
+<style>
+	.tools-row {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+		gap: 0.75rem;
+		margin-bottom: 2rem;
+	}
+
+	.tool-card {
+		background: var(--card-bg);
+		border: 2px solid var(--border);
+		border-radius: 12px;
+		padding: 0.75rem 1rem;
+		transition: border-color 0.15s;
+	}
+
+	.tool-card:hover { border-color: var(--blue); }
+
+	.tool-name {
+		font-family: var(--font-mono);
+		font-size: 0.82rem;
+		font-weight: 700;
+		color: var(--blue);
+	}
+
+	.tool-desc {
+		font-size: 0.82rem;
+		color: var(--fg-muted);
+		margin-top: 0.2rem;
+	}
+</style>

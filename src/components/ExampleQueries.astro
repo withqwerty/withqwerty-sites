@@ -1,0 +1,31 @@
+---
+interface Props {
+	queries: string[];
+}
+
+const { queries } = Astro.props;
+---
+
+<ul class="example-queries">
+	{queries.map((q) => <li>{q}</li>)}
+</ul>
+
+<style>
+	.example-queries {
+		list-style: none;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+		margin-bottom: 2rem;
+	}
+
+	.example-queries li {
+		background: var(--card-bg);
+		border: 1px solid var(--border);
+		border-radius: 20px;
+		padding: 0.4rem 0.9rem;
+		font-size: 0.85rem;
+		color: var(--fg-muted);
+		font-style: italic;
+	}
+</style>

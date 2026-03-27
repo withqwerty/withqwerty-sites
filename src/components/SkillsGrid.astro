@@ -1,0 +1,50 @@
+---
+interface Props {
+	skills: Array<{ name: string; desc: string }>;
+	color?: 'green' | 'blue';
+}
+
+const { skills, color = 'green' } = Astro.props;
+---
+
+<div class="skills-grid">
+	{skills.map(({ name, desc }) => (
+		<div class={`skill-chip ${color}`}>
+			<div class={`skill-chip-name ${color}`}>{name}</div>
+			<div class="skill-chip-desc">{desc}</div>
+		</div>
+	))}
+</div>
+
+<style>
+	.skills-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+		gap: 0.75rem;
+		margin-bottom: 2rem;
+	}
+
+	.skill-chip {
+		background: var(--card-bg);
+		border: 2px solid var(--border);
+		border-radius: 12px;
+		padding: 0.75rem 1rem;
+		transition: border-color 0.15s;
+	}
+
+	.skill-chip.green:hover { border-color: var(--green); }
+
+	.skill-chip-name {
+		font-family: var(--font-mono);
+		font-size: 0.8rem;
+		font-weight: 700;
+	}
+
+	.skill-chip-name.green { color: var(--green); }
+
+	.skill-chip-desc {
+		font-size: 0.82rem;
+		color: var(--fg-muted);
+		margin-top: 0.2rem;
+	}
+</style>

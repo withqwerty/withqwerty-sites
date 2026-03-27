@@ -1,0 +1,58 @@
+---
+interface Props {
+	cards: Array<{ label: string; code: string; color?: 'green' | 'blue' }>;
+}
+
+const { cards } = Astro.props;
+---
+
+<div class="install-row">
+	{cards.map(({ label, code, color = 'blue' }) => (
+		<div class={`install-card ${color}`}>
+			<div class={`install-label ${color}`}>{label}</div>
+			<code>{code}</code>
+		</div>
+	))}
+</div>
+
+<style>
+	.install-row {
+		display: flex;
+		gap: 1rem;
+		margin-bottom: 2rem;
+		flex-wrap: wrap;
+	}
+
+	.install-card {
+		flex: 1;
+		min-width: 260px;
+		background: var(--card-bg);
+		border: 2px solid var(--border);
+		border-radius: var(--radius);
+		padding: 1rem 1.25rem;
+		transition: border-color 0.15s;
+	}
+
+	.install-card.green:hover { border-color: var(--green); }
+	.install-card.blue:hover { border-color: var(--blue); }
+
+	.install-label {
+		font-size: 0.75rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		margin-bottom: 0.4rem;
+	}
+
+	.install-label.green { color: var(--green); }
+	.install-label.blue { color: var(--blue); }
+
+	.install-card code {
+		display: block;
+		font-size: 0.82rem;
+		line-height: 1.7;
+		color: var(--fg);
+		background: none;
+		padding: 0;
+	}
+</style>

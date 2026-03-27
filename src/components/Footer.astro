@@ -1,0 +1,29 @@
+---
+interface Props {
+	links: Array<{ href: string; label: string }>;
+	credit?: string;
+}
+
+const { links, credit } = Astro.props;
+---
+
+<div class="footer">
+	<p>
+		{links.map(({ href, label }, i) => (
+			<>{i > 0 && ' · '}<a href={href}>{label}</a></>
+		))}
+		{credit && <>{' · '}{credit}</>}
+	</p>
+</div>
+
+<style>
+	.footer {
+		margin-top: 2.5rem;
+		padding-top: 1.5rem;
+		border-top: 1px solid var(--border);
+		color: var(--fg-muted);
+		font-size: 0.85rem;
+	}
+
+	.footer a { text-decoration: underline; text-underline-offset: 2px; }
+</style>

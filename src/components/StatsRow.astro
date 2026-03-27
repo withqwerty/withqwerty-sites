@@ -1,0 +1,41 @@
+---
+interface Props {
+	stats: Array<{ value: string | number; label: string }>;
+	color?: 'green' | 'blue';
+}
+
+const { stats, color = 'blue' } = Astro.props;
+---
+
+<div class="stat-row">
+	{stats.map(({ value, label }) => (
+		<div class={`stat-card ${color}`}>
+			<div class="stat-number">{value}</div>
+			<div class="stat-label">{label}</div>
+		</div>
+	))}
+</div>
+
+<style>
+	.stat-row {
+		display: flex;
+		gap: 1rem;
+		margin-bottom: 2rem;
+		flex-wrap: wrap;
+	}
+
+	.stat-card {
+		flex: 1;
+		min-width: 100px;
+		border-radius: var(--radius);
+		padding: 1.25rem;
+		text-align: center;
+		color: white;
+	}
+
+	.stat-card.blue { background: var(--blue); }
+	.stat-card.green { background: var(--green); }
+
+	.stat-number { font-size: 2rem; font-weight: 900; line-height: 1; }
+	.stat-label { font-size: 0.8rem; opacity: 0.8; margin-top: 0.25rem; }
+</style>

@@ -1,499 +1,145 @@
 ---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+import Hero from '../components/Hero.astro';
 import Qualifier from '../components/Qualifier.astro';
+import SkillsGrid from '../components/SkillsGrid.astro';
+import ProvidersTable from '../components/ProvidersTable.astro';
+import StatsRow from '../components/StatsRow.astro';
+import InstallRow from '../components/InstallRow.astro';
+import ToolsGrid from '../components/ToolsGrid.astro';
+import ExampleQueries from '../components/ExampleQueries.astro';
+import ProvidersGrid from '../components/ProvidersGrid.astro';
+import CtaBanner from '../components/CtaBanner.astro';
+import Footer from '../components/Footer.astro';
+
+const skills = [
+	{ name: '/nutmeg-acquire', desc: 'Fetch data from any source' },
+	{ name: '/nutmeg-wrangle', desc: 'Transform and reshape data' },
+	{ name: '/nutmeg-compute', desc: 'Derived metrics (xG, PPDA...)' },
+	{ name: '/nutmeg-analyse', desc: 'Explore and interpret data' },
+	{ name: '/nutmeg-brainstorm', desc: 'Visualisation ideation' },
+	{ name: '/nutmeg-review', desc: 'Check data code and charts' },
+	{ name: '/nutmeg-providers', desc: 'Search provider docs' },
+	{ name: '/nutmeg-store', desc: 'Storage and publishing' },
+	{ name: '/nutmeg-learn', desc: 'Concepts, papers, courses' },
+	{ name: '/nutmeg-heal', desc: 'Fix broken scrapers' },
+	{ name: '/nutmeg-credentials', desc: 'API key management' },
+	{ name: '/nutmeg-init', desc: 'Set up your profile' },
+];
+
+const dataProviders = [
+	{ name: 'StatsBomb', events: 'yes' as const, stats: 'yes' as const, xg: 'yes' as const, free: 'partial' as const, freeNote: 'Open data' },
+	{ name: 'Opta', events: 'yes' as const, stats: 'yes' as const, xg: 'yes' as const, free: 'no' as const },
+	{ name: 'Wyscout', events: 'yes' as const, stats: 'yes' as const, xg: 'no' as const, free: 'no' as const },
+	{ name: 'SportMonks', events: 'partial' as const, stats: 'yes' as const, xg: 'no' as const, free: 'partial' as const, freeNote: 'Free tier' },
+	{ name: 'FBref', events: 'no' as const, stats: 'yes' as const, xg: 'yes' as const, free: 'yes' as const },
+	{ name: 'Understat', events: 'no' as const, stats: 'partial' as const, xg: 'yes' as const, free: 'yes' as const },
+];
+
+const mcpTools = [
+	{ name: 'search_docs', desc: 'Full-text search across all providers' },
+	{ name: 'list_providers', desc: 'See all indexed providers' },
+	{ name: 'compare_providers', desc: 'Compare how providers handle concepts' },
+	{ name: 'request_update', desc: 'Flag outdated docs or request new ones' },
+];
+
+const exampleQueries = [
+	'"What is Opta qualifier 76?"',
+	'"How does StatsBomb represent shots?"',
+	'"Compare Opta and Wyscout coordinates"',
+	'"Does SportMonks have xG?"',
+	'"How does SPADL represent a tackle?"',
+];
+
+const indexedProviders = [
+	{ name: 'StatsBomb', chunks: 143 },
+	{ name: 'kloppy', chunks: 100 },
+	{ name: 'SportMonks', chunks: 71 },
+	{ name: 'databallpy', chunks: 63 },
+	{ name: 'mplsoccer', chunks: 62 },
+	{ name: 'Wyscout', chunks: 61 },
+	{ name: 'Free sources', chunks: 45 },
+	{ name: 'soccerdata', chunks: 40 },
+	{ name: 'Opta', chunks: 29 },
+	{ name: 'socceraction', chunks: 26 },
+];
+
+const footerLinks = [
+	{ href: 'https://github.com/withqwerty/nutmeg', label: 'nutmeg on GitHub' },
+	{ href: 'https://github.com/withqwerty/football-docs', label: 'football-docs on GitHub' },
+	{ href: 'https://www.npmjs.com/package/football-docs', label: 'football-docs on npm' },
+	{ href: '#', label: 'MIT License' },
+];
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<title>nutmeg — Football data analytics for AI coding tools</title>
-		<meta name="description" content="A Claude Code plugin and MCP server for football data. Makes your AI agent an expert at Opta, StatsBomb, Wyscout, SportMonks, and more." />
-		<meta property="og:title" content="nutmeg — Football data analytics for AI coding tools" />
-		<meta property="og:description" content="A Claude Code plugin and MCP server for football data." />
-		<meta property="og:type" content="website" />
-		<meta property="og:url" content="https://nutmeg.withqwerty.com" />
-		<meta name="twitter:card" content="summary_large_image" />
-		<link rel="icon" type="image/png" href="/nutmeg/favicon.png" />
-		<link rel="preconnect" href="https://fonts.googleapis.com" />
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
-		<style is:global>
-			:root {
-				--font-display: 'DM Sans', -apple-system, sans-serif;
-				--font-mono: 'Space Mono', monospace;
-				--bg: #FAFAFA;
-				--fg: #1a1a1a;
-				--fg-muted: #666;
-				--border: #e5e5e5;
-				--card-bg: #fff;
-				--radius: 16px;
-				--green: #2D6A4F;
-				--green-light: #D8F3DC;
-				--blue: #1565C0;
-				--blue-light: #BBDEFB;
-			}
-
-			* { margin: 0; padding: 0; box-sizing: border-box; }
-
-			html {
-				font-family: var(--font-display);
-				background: var(--bg);
-				color: var(--fg);
-				font-size: 17px;
-				line-height: 1.6;
-				-webkit-font-smoothing: antialiased;
-				scroll-behavior: smooth;
-			}
-
-			body {
-				max-width: 960px;
-				margin: 0 auto;
-				padding: 3rem 2rem 4rem;
-			}
-
-			a { color: inherit; }
-			a:hover { opacity: 0.7; }
-
-			code {
-				font-family: var(--font-mono);
-				font-size: 0.85rem;
-				background: #f0f0f0;
-				padding: 0.15rem 0.4rem;
-				border-radius: 4px;
-			}
-
-			/* Nav */
-			.nav {
-				display: flex;
-				gap: 1.5rem;
-				margin-bottom: 3rem;
-				font-size: 0.9rem;
-				font-weight: 500;
-			}
-
-			.nav a {
-				text-decoration: none;
-				color: var(--fg-muted);
-				padding-bottom: 0.25rem;
-			}
-
-			.nav a:hover { color: var(--fg); opacity: 1; }
-
-			/* Hero */
-			.hero {
-				display: flex;
-				align-items: center;
-				gap: 2rem;
-				margin-bottom: 2rem;
-			}
-
-			.hero-icon { width: 80px; height: 80px; flex-shrink: 0; }
-
-			.hero h1 {
-				font-size: 2.5rem;
-				font-weight: 900;
-				letter-spacing: -0.03em;
-				line-height: 1.1;
-			}
-
-			.hero .tagline {
-				color: var(--fg-muted);
-				font-size: 1.1rem;
-				margin-top: 0.25rem;
-			}
-
-			.pitch {
-				font-size: 1.1rem;
-				line-height: 1.7;
-				max-width: 720px;
-				margin-bottom: 2.5rem;
-				color: var(--fg-muted);
-			}
-
-			/* Section titles */
-			.section-title {
-				font-size: 0.8rem;
-				font-weight: 700;
-				text-transform: uppercase;
-				letter-spacing: 0.1em;
-				margin-bottom: 1rem;
-				margin-top: 2.5rem;
-			}
-
-			.section-title.green { color: var(--green); }
-			.section-title.blue { color: var(--blue); }
-
-			/* Install cards */
-			.install-row {
-				display: flex;
-				gap: 1rem;
-				margin-bottom: 2rem;
-				flex-wrap: wrap;
-			}
-
-			.install-card {
-				flex: 1;
-				min-width: 260px;
-				background: var(--card-bg);
-				border: 2px solid var(--border);
-				border-radius: var(--radius);
-				padding: 1rem 1.25rem;
-				transition: border-color 0.15s;
-			}
-
-			.install-card.green:hover { border-color: var(--green); }
-			.install-card.blue:hover { border-color: var(--blue); }
-
-			.install-label {
-				font-size: 0.75rem;
-				font-weight: 700;
-				text-transform: uppercase;
-				letter-spacing: 0.08em;
-				margin-bottom: 0.4rem;
-			}
-
-			.install-label.green { color: var(--green); }
-			.install-label.blue { color: var(--blue); }
-
-			.install-card code {
-				display: block;
-				font-size: 0.82rem;
-				line-height: 1.7;
-				color: var(--fg);
-				background: none;
-				padding: 0;
-			}
-
-			/* Skill chips */
-			.skills-grid {
-				display: grid;
-				grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-				gap: 0.75rem;
-				margin-bottom: 2rem;
-			}
-
-			.skill-chip {
-				background: var(--card-bg);
-				border: 2px solid var(--border);
-				border-radius: 12px;
-				padding: 0.75rem 1rem;
-				transition: border-color 0.15s;
-			}
-
-			.skill-chip.green:hover { border-color: var(--green); }
-
-			.skill-chip-name {
-				font-family: var(--font-mono);
-				font-size: 0.8rem;
-				font-weight: 700;
-			}
-
-			.skill-chip-name.green { color: var(--green); }
-
-			.skill-chip-desc {
-				font-size: 0.82rem;
-				color: var(--fg-muted);
-				margin-top: 0.2rem;
-			}
-
-			/* Provider table */
-			.providers-table {
-				width: 100%;
-				border-collapse: collapse;
-				margin-bottom: 2rem;
-				font-size: 0.9rem;
-			}
-
-			.providers-table th {
-				text-align: left;
-				font-size: 0.75rem;
-				font-weight: 700;
-				text-transform: uppercase;
-				letter-spacing: 0.06em;
-				color: var(--fg-muted);
-				padding: 0.5rem 0.75rem;
-				border-bottom: 2px solid var(--border);
-			}
-
-			.providers-table td {
-				padding: 0.5rem 0.75rem;
-				border-bottom: 1px solid var(--border);
-			}
-
-			.dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; }
-			.dot-yes { background: var(--green); }
-			.dot-no { background: #ddd; }
-			.dot-partial { background: #B7E4C7; }
-
-			/* Divider */
-			.product-divider {
-				border: none;
-				border-top: 3px solid var(--border);
-				margin: 3rem 0;
-			}
-
-			/* Tool cards */
-			.tools-row {
-				display: grid;
-				grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-				gap: 0.75rem;
-				margin-bottom: 2rem;
-			}
-
-			.tool-card {
-				background: var(--card-bg);
-				border: 2px solid var(--border);
-				border-radius: 12px;
-				padding: 0.75rem 1rem;
-				transition: border-color 0.15s;
-			}
-
-			.tool-card:hover { border-color: var(--blue); }
-
-			.tool-name {
-				font-family: var(--font-mono);
-				font-size: 0.82rem;
-				font-weight: 700;
-				color: var(--blue);
-			}
-
-			.tool-desc {
-				font-size: 0.82rem;
-				color: var(--fg-muted);
-				margin-top: 0.2rem;
-			}
-
-			/* Example queries */
-			.example-queries {
-				list-style: none;
-				display: flex;
-				flex-wrap: wrap;
-				gap: 0.5rem;
-				margin-bottom: 2rem;
-			}
-
-			.example-queries li {
-				background: var(--card-bg);
-				border: 1px solid var(--border);
-				border-radius: 20px;
-				padding: 0.4rem 0.9rem;
-				font-size: 0.85rem;
-				color: var(--fg-muted);
-				font-style: italic;
-			}
-
-			/* Provider chips */
-			.providers-grid {
-				display: grid;
-				grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-				gap: 0.5rem;
-				margin-bottom: 2rem;
-			}
-
-			.provider-chip {
-				background: var(--card-bg);
-				border: 2px solid var(--border);
-				border-radius: 10px;
-				padding: 0.6rem 0.8rem;
-				text-align: center;
-			}
-
-			.provider-name { font-weight: 700; font-size: 0.9rem; }
-			.provider-chunks { font-size: 0.75rem; color: var(--fg-muted); }
-
-			/* Stats */
-			.stat-row {
-				display: flex;
-				gap: 1rem;
-				margin-bottom: 2rem;
-				flex-wrap: wrap;
-			}
-
-			.stat-card {
-				flex: 1;
-				min-width: 100px;
-				border-radius: var(--radius);
-				padding: 1.25rem;
-				text-align: center;
-				color: white;
-			}
-
-			.stat-card.blue { background: var(--blue); }
-
-			.stat-number { font-size: 2rem; font-weight: 900; line-height: 1; }
-			.stat-label { font-size: 0.8rem; opacity: 0.8; margin-top: 0.25rem; }
-
-			/* CTA */
-			.cta-banner {
-				border-radius: var(--radius);
-				padding: 2rem;
-				text-align: center;
-				margin-top: 2rem;
-				color: white;
-			}
-
-			.cta-banner.green { background: var(--green); }
-
-			.cta-banner h2 { font-size: 1.5rem; font-weight: 900; margin-bottom: 0.5rem; }
-			.cta-banner p { opacity: 0.8; margin-bottom: 1rem; }
-			.cta-banner code { background: rgba(255,255,255,0.15); color: white; font-size: 0.9rem; padding: 0.3rem 0.8rem; border-radius: 6px; }
-
-			/* Footer */
-			.footer {
-				margin-top: 2.5rem;
-				padding-top: 1.5rem;
-				border-top: 1px solid var(--border);
-				color: var(--fg-muted);
-				font-size: 0.85rem;
-			}
-
-			.footer a { text-decoration: underline; text-underline-offset: 2px; }
-		</style>
-	</head>
-	<body>
-		<nav class="nav">
-			<a href="#get-started">Get started</a>
-			<a href="#nutmeg">nutmeg</a>
-			<a href="#football-docs">football-docs</a>
-			<a href="https://github.com/withqwerty">GitHub</a>
-		</nav>
-
-		<!-- ═══════════════════ NUTMEG ═══════════════════ -->
-
-		<section id="nutmeg">
-			<div class="hero">
-				<img src="/nutmeg/icon.svg" alt="nutmeg" class="hero-icon" />
-				<div>
-					<h1>nutmeg</h1>
-					<div class="tagline">Football data analytics for AI coding tools</div>
-				</div>
-			</div>
-
-			<p class="pitch">
-				Makes your AI agent an expert at football data. It looks up the real docs instead of guessing &mdash; qualifier IDs, coordinate systems, API endpoints, method signatures. All verified, all sourced.
-			</p>
-
-			<Qualifier />
-
-			<div class="section-title green">Skills</div>
-
-			<div class="skills-grid">
-				<div class="skill-chip green"><div class="skill-chip-name green">/nutmeg-acquire</div><div class="skill-chip-desc">Fetch data from any source</div></div>
-				<div class="skill-chip green"><div class="skill-chip-name green">/nutmeg-wrangle</div><div class="skill-chip-desc">Transform and reshape data</div></div>
-				<div class="skill-chip green"><div class="skill-chip-name green">/nutmeg-compute</div><div class="skill-chip-desc">Derived metrics (xG, PPDA...)</div></div>
-				<div class="skill-chip green"><div class="skill-chip-name green">/nutmeg-analyse</div><div class="skill-chip-desc">Explore and interpret data</div></div>
-				<div class="skill-chip green"><div class="skill-chip-name green">/nutmeg-brainstorm</div><div class="skill-chip-desc">Visualisation ideation</div></div>
-				<div class="skill-chip green"><div class="skill-chip-name green">/nutmeg-review</div><div class="skill-chip-desc">Check data code and charts</div></div>
-				<div class="skill-chip green"><div class="skill-chip-name green">/nutmeg-providers</div><div class="skill-chip-desc">Search provider docs</div></div>
-				<div class="skill-chip green"><div class="skill-chip-name green">/nutmeg-store</div><div class="skill-chip-desc">Storage and publishing</div></div>
-				<div class="skill-chip green"><div class="skill-chip-name green">/nutmeg-learn</div><div class="skill-chip-desc">Concepts, papers, courses</div></div>
-				<div class="skill-chip green"><div class="skill-chip-name green">/nutmeg-heal</div><div class="skill-chip-desc">Fix broken scrapers</div></div>
-				<div class="skill-chip green"><div class="skill-chip-name green">/nutmeg-credentials</div><div class="skill-chip-desc">API key management</div></div>
-				<div class="skill-chip green"><div class="skill-chip-name green">/nutmeg-init</div><div class="skill-chip-desc">Set up your profile</div></div>
-			</div>
-
-			<div class="section-title green">Providers</div>
-
-			<table class="providers-table">
-				<thead>
-					<tr><th>Provider</th><th>Events</th><th>Stats</th><th>xG</th><th>Free?</th></tr>
-				</thead>
-				<tbody>
-					<tr><td>StatsBomb</td><td><span class="dot dot-yes"></span></td><td><span class="dot dot-yes"></span></td><td><span class="dot dot-yes"></span></td><td><span class="dot dot-partial"></span> Open data</td></tr>
-					<tr><td>Opta</td><td><span class="dot dot-yes"></span></td><td><span class="dot dot-yes"></span></td><td><span class="dot dot-yes"></span></td><td><span class="dot dot-no"></span></td></tr>
-					<tr><td>Wyscout</td><td><span class="dot dot-yes"></span></td><td><span class="dot dot-yes"></span></td><td><span class="dot dot-no"></span></td><td><span class="dot dot-no"></span></td></tr>
-					<tr><td>SportMonks</td><td><span class="dot dot-partial"></span></td><td><span class="dot dot-yes"></span></td><td><span class="dot dot-no"></span></td><td><span class="dot dot-partial"></span> Free tier</td></tr>
-					<tr><td>FBref</td><td><span class="dot dot-no"></span></td><td><span class="dot dot-yes"></span></td><td><span class="dot dot-yes"></span></td><td><span class="dot dot-yes"></span></td></tr>
-					<tr><td>Understat</td><td><span class="dot dot-no"></span></td><td><span class="dot dot-partial"></span></td><td><span class="dot dot-yes"></span></td><td><span class="dot dot-yes"></span></td></tr>
-				</tbody>
-			</table>
-		</section>
-
-		<hr class="product-divider" />
-
-		<!-- ═══════════════════ FOOTBALL-DOCS ═══════════════════ -->
-
-		<section id="football-docs">
-			<div class="hero">
-				<img src="/football-docs/icon.svg" alt="football-docs" class="hero-icon" />
-				<div>
-					<h1>football-docs</h1>
-					<div class="tagline">Like Context7 for football data</div>
-				</div>
-			</div>
-
-			<p class="pitch">
-				Searchable documentation for 16 football data providers, built for AI coding agents. Your agent looks up the real docs instead of guessing from training data. Works with any tool that supports MCP.
-			</p>
-
-			<div class="stat-row">
-				<div class="stat-card blue"><div class="stat-number">640</div><div class="stat-label">searchable chunks</div></div>
-				<div class="stat-card blue"><div class="stat-number">16</div><div class="stat-label">providers</div></div>
-				<div class="stat-card blue"><div class="stat-number">4</div><div class="stat-label">MCP tools</div></div>
-			</div>
-
-			<div class="section-title blue">Install</div>
-
-			<div class="install-row">
-				<div class="install-card blue">
-					<div class="install-label blue">Claude Code</div>
-					<code>claude mcp add football-docs -- npx -y football-docs</code>
-				</div>
-				<div class="install-card blue">
-					<div class="install-label blue">Any MCP client</div>
-					<code>npx -y football-docs</code>
-				</div>
-			</div>
-
-			<div class="section-title blue">Tools</div>
-
-			<div class="tools-row">
-				<div class="tool-card"><div class="tool-name">search_docs</div><div class="tool-desc">Full-text search across all providers</div></div>
-				<div class="tool-card"><div class="tool-name">list_providers</div><div class="tool-desc">See all indexed providers</div></div>
-				<div class="tool-card"><div class="tool-name">compare_providers</div><div class="tool-desc">Compare how providers handle concepts</div></div>
-				<div class="tool-card"><div class="tool-name">request_update</div><div class="tool-desc">Flag outdated docs or request new ones</div></div>
-			</div>
-
-			<div class="section-title blue">Example queries</div>
-
-			<ul class="example-queries">
-				<li>"What is Opta qualifier 76?"</li>
-				<li>"How does StatsBomb represent shots?"</li>
-				<li>"Compare Opta and Wyscout coordinates"</li>
-				<li>"Does SportMonks have xG?"</li>
-				<li>"How does SPADL represent a tackle?"</li>
-			</ul>
-
-			<div class="section-title blue">Indexed providers</div>
-
-			<div class="providers-grid">
-				<div class="provider-chip"><div class="provider-name">StatsBomb</div><div class="provider-chunks">143 chunks</div></div>
-				<div class="provider-chip"><div class="provider-name">kloppy</div><div class="provider-chunks">100 chunks</div></div>
-				<div class="provider-chip"><div class="provider-name">SportMonks</div><div class="provider-chunks">71 chunks</div></div>
-				<div class="provider-chip"><div class="provider-name">databallpy</div><div class="provider-chunks">63 chunks</div></div>
-				<div class="provider-chip"><div class="provider-name">mplsoccer</div><div class="provider-chunks">62 chunks</div></div>
-				<div class="provider-chip"><div class="provider-name">Wyscout</div><div class="provider-chunks">61 chunks</div></div>
-				<div class="provider-chip"><div class="provider-name">Free sources</div><div class="provider-chunks">45 chunks</div></div>
-				<div class="provider-chip"><div class="provider-name">soccerdata</div><div class="provider-chunks">40 chunks</div></div>
-				<div class="provider-chip"><div class="provider-name">Opta</div><div class="provider-chunks">29 chunks</div></div>
-				<div class="provider-chip"><div class="provider-name">socceraction</div><div class="provider-chunks">26 chunks</div></div>
-			</div>
-		</section>
-
-		<div class="cta-banner green">
-			<h2>Start building with football data</h2>
-			<p>Install in 30 seconds. Your AI agent becomes a football data expert.</p>
-			<code>/plugin install nutmeg@withqwerty/nutmeg</code>
-		</div>
-
-		<div class="footer">
-			<p>
-				<a href="https://github.com/withqwerty/nutmeg">nutmeg on GitHub</a> ·
-				<a href="https://github.com/withqwerty/football-docs">football-docs on GitHub</a> ·
-				<a href="https://www.npmjs.com/package/football-docs">football-docs on npm</a> ·
-				MIT License ·
-				Made by <a href="https://github.com/withqwerty">withqwerty</a>
-			</p>
-		</div>
-	</body>
-</html>
+<BaseLayout>
+	<Nav links={[
+		{ href: '#get-started', label: 'Get started' },
+		{ href: '#nutmeg', label: 'nutmeg' },
+		{ href: '#football-docs', label: 'football-docs' },
+		{ href: 'https://github.com/withqwerty', label: 'GitHub', external: true },
+	]} />
+
+	<!-- nutmeg -->
+	<section id="nutmeg">
+		<Hero
+			icon="/nutmeg/icon.svg"
+			title="nutmeg"
+			tagline="Football data analytics for AI coding tools"
+			pitch="Makes your AI agent an expert at football data. It looks up the real docs instead of guessing &mdash; qualifier IDs, coordinate systems, API endpoints, method signatures. All verified, all sourced."
+		/>
+
+		<Qualifier />
+
+		<div class="section-title green">Skills</div>
+		<SkillsGrid skills={skills} />
+
+		<div class="section-title green">Providers</div>
+		<ProvidersTable providers={dataProviders} />
+	</section>
+
+	<hr class="product-divider" />
+
+	<!-- football-docs -->
+	<section id="football-docs">
+		<Hero
+			icon="/football-docs/icon.svg"
+			title="football-docs"
+			tagline="Like Context7 for football data"
+			pitch="Searchable documentation for 16 football data providers, built for AI coding agents. Your agent looks up the real docs instead of guessing from training data. Works with any tool that supports MCP."
+		/>
+
+		<StatsRow stats={[
+			{ value: 640, label: 'searchable chunks' },
+			{ value: 16, label: 'providers' },
+			{ value: 4, label: 'MCP tools' },
+		]} />
+
+		<div class="section-title blue">Install</div>
+		<InstallRow cards={[
+			{ label: 'Claude Code', code: 'claude mcp add football-docs -- npx -y football-docs', color: 'blue' },
+			{ label: 'Any MCP client', code: 'npx -y football-docs', color: 'blue' },
+		]} />
+
+		<div class="section-title blue">Tools</div>
+		<ToolsGrid tools={mcpTools} />
+
+		<div class="section-title blue">Example queries</div>
+		<ExampleQueries queries={exampleQueries} />
+
+		<div class="section-title blue">Indexed providers</div>
+		<ProvidersGrid providers={indexedProviders} />
+	</section>
+
+	<CtaBanner
+		headline="Start building with football data"
+		description="Install in 30 seconds. Your AI agent becomes a football data expert."
+		code="/plugin install nutmeg@withqwerty/nutmeg"
+	/>
+
+	<Footer
+		links={footerLinks}
+		credit="Made by withqwerty"
+	/>
+</BaseLayout>

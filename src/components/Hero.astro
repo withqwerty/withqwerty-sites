@@ -1,0 +1,52 @@
+---
+interface Props {
+	icon: string;
+	title: string;
+	tagline: string;
+	pitch: string;
+}
+
+const { icon, title, tagline, pitch } = Astro.props;
+---
+
+<div class="hero">
+	<img src={icon} alt={title} class="hero-icon" />
+	<div>
+		<h1>{title}</h1>
+		<div class="tagline">{tagline}</div>
+	</div>
+</div>
+
+<p class="pitch" set:html={pitch} />
+
+<style>
+	.hero {
+		display: flex;
+		align-items: center;
+		gap: 2rem;
+		margin-bottom: 2rem;
+	}
+
+	.hero-icon { width: 80px; height: 80px; flex-shrink: 0; }
+
+	.hero h1 {
+		font-size: 2.5rem;
+		font-weight: 900;
+		letter-spacing: -0.03em;
+		line-height: 1.1;
+	}
+
+	.hero .tagline {
+		color: var(--fg-muted);
+		font-size: 1.1rem;
+		margin-top: 0.25rem;
+	}
+
+	.pitch {
+		font-size: 1.1rem;
+		line-height: 1.7;
+		max-width: 720px;
+		margin-bottom: 2.5rem;
+		color: var(--fg-muted);
+	}
+</style>
