@@ -1,0 +1,294 @@
+---
+import ProductLayout from '../../layouts/ProductLayout.astro';
+---
+
+<ProductLayout
+	title="nutmeg — Football data analytics for AI coding tools"
+	description="A Claude Code plugin that makes your AI agent an expert at football data. Covers Opta, StatsBomb, Wyscout, SportMonks, and free sources."
+	url="https://nutmeg.withqwerty.com"
+	accent="#2D6A4F"
+	accentLight="#D8F3DC"
+	favicon="/nutmeg/favicon.png"
+>
+	<style>
+		.hero {
+			display: flex;
+			align-items: center;
+			gap: 2rem;
+			margin-bottom: 2.5rem;
+		}
+
+		.hero-icon {
+			width: 80px;
+			height: 80px;
+			flex-shrink: 0;
+		}
+
+		.hero h1 {
+			font-size: 2.5rem;
+			font-weight: 900;
+			letter-spacing: -0.03em;
+			line-height: 1.1;
+		}
+
+		.hero .tagline {
+			color: var(--fg-muted);
+			font-size: 1.1rem;
+			margin-top: 0.25rem;
+		}
+
+		.pitch {
+			font-size: 1.15rem;
+			line-height: 1.7;
+			max-width: 700px;
+			margin-bottom: 2.5rem;
+			color: var(--fg-muted);
+		}
+
+		.install-row {
+			display: flex;
+			gap: 1rem;
+			margin-bottom: 2.5rem;
+			flex-wrap: wrap;
+		}
+
+		.install-card {
+			flex: 1;
+			min-width: 260px;
+			background: var(--card-bg);
+			border: 2px solid var(--border);
+			border-radius: var(--radius);
+			padding: 1.25rem 1.5rem;
+		}
+
+		.install-card:hover { border-color: #2D6A4F; }
+
+		.install-label {
+			font-size: 0.75rem;
+			font-weight: 700;
+			text-transform: uppercase;
+			letter-spacing: 0.08em;
+			color: #2D6A4F;
+			margin-bottom: 0.5rem;
+		}
+
+		.install-card code {
+			display: block;
+			font-size: 0.82rem;
+			line-height: 1.7;
+			color: var(--fg);
+			background: none;
+			padding: 0;
+		}
+
+		.section-title {
+			font-size: 0.8rem;
+			font-weight: 700;
+			text-transform: uppercase;
+			letter-spacing: 0.1em;
+			color: #2D6A4F;
+			margin-bottom: 1rem;
+			margin-top: 2.5rem;
+		}
+
+		.skills-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+			gap: 0.75rem;
+			margin-bottom: 2rem;
+		}
+
+		.skill-chip {
+			background: var(--card-bg);
+			border: 2px solid var(--border);
+			border-radius: 12px;
+			padding: 0.75rem 1rem;
+			transition: border-color 0.15s;
+		}
+
+		.skill-chip:hover { border-color: #2D6A4F; }
+
+		.skill-chip-name {
+			font-family: var(--font-mono);
+			font-size: 0.8rem;
+			font-weight: 700;
+			color: #2D6A4F;
+		}
+
+		.skill-chip-desc {
+			font-size: 0.82rem;
+			color: var(--fg-muted);
+			margin-top: 0.2rem;
+		}
+
+		.providers-table {
+			width: 100%;
+			border-collapse: collapse;
+			margin-bottom: 2rem;
+			font-size: 0.9rem;
+		}
+
+		.providers-table th {
+			text-align: left;
+			font-size: 0.75rem;
+			font-weight: 700;
+			text-transform: uppercase;
+			letter-spacing: 0.06em;
+			color: var(--fg-muted);
+			padding: 0.5rem 0.75rem;
+			border-bottom: 2px solid var(--border);
+		}
+
+		.providers-table td {
+			padding: 0.5rem 0.75rem;
+			border-bottom: 1px solid var(--border);
+		}
+
+		.dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; }
+		.dot-yes { background: #2D6A4F; }
+		.dot-no { background: #ddd; }
+		.dot-partial { background: #B7E4C7; }
+
+		.cta-banner {
+			background: #2D6A4F;
+			color: white;
+			border-radius: var(--radius);
+			padding: 2rem;
+			text-align: center;
+			margin-top: 2.5rem;
+		}
+
+		.cta-banner h2 {
+			font-size: 1.5rem;
+			font-weight: 900;
+			margin-bottom: 0.5rem;
+		}
+
+		.cta-banner p {
+			opacity: 0.8;
+			margin-bottom: 1rem;
+		}
+
+		.cta-banner code {
+			background: rgba(255,255,255,0.15);
+			color: white;
+			font-size: 0.9rem;
+			padding: 0.3rem 0.8rem;
+			border-radius: 6px;
+		}
+
+		.footer {
+			margin-top: 2.5rem;
+			padding-top: 1.5rem;
+			border-top: 1px solid var(--border);
+			color: var(--fg-muted);
+			font-size: 0.85rem;
+		}
+
+		.footer a { text-decoration: underline; text-underline-offset: 2px; }
+	</style>
+
+	<div class="hero">
+		<img src="/nutmeg/icon.svg" alt="nutmeg" class="hero-icon" />
+		<div>
+			<h1>nutmeg</h1>
+			<div class="tagline">Football data analytics for AI coding tools</div>
+		</div>
+	</div>
+
+	<p class="pitch">
+		Makes your AI agent an expert at football data. Acquire, wrangle, compute, and analyse data from Opta, StatsBomb, Wyscout, SportMonks, FBref, and more. It looks up the real docs instead of guessing.
+	</p>
+
+	<div class="install-row">
+		<div class="install-card">
+			<div class="install-label">Claude Code (full plugin)</div>
+			<code>/plugin install nutmeg@withqwerty</code>
+		</div>
+		<div class="install-card">
+			<div class="install-label">Any agent (skills only)</div>
+			<code>npx skills add withqwerty/nutmeg</code>
+		</div>
+	</div>
+
+	<div class="section-title">Skills</div>
+
+	<div class="skills-grid">
+		<div class="skill-chip">
+			<div class="skill-chip-name">/nutmeg-acquire</div>
+			<div class="skill-chip-desc">Fetch data from any source</div>
+		</div>
+		<div class="skill-chip">
+			<div class="skill-chip-name">/nutmeg-wrangle</div>
+			<div class="skill-chip-desc">Transform and reshape data</div>
+		</div>
+		<div class="skill-chip">
+			<div class="skill-chip-name">/nutmeg-compute</div>
+			<div class="skill-chip-desc">Derived metrics (xG, PPDA...)</div>
+		</div>
+		<div class="skill-chip">
+			<div class="skill-chip-name">/nutmeg-analyse</div>
+			<div class="skill-chip-desc">Explore and interpret data</div>
+		</div>
+		<div class="skill-chip">
+			<div class="skill-chip-name">/nutmeg-providers</div>
+			<div class="skill-chip-desc">Search provider docs</div>
+		</div>
+		<div class="skill-chip">
+			<div class="skill-chip-name">/nutmeg-store</div>
+			<div class="skill-chip-desc">Storage and publishing</div>
+		</div>
+		<div class="skill-chip">
+			<div class="skill-chip-name">/nutmeg-learn</div>
+			<div class="skill-chip-desc">Concepts, papers, courses</div>
+		</div>
+		<div class="skill-chip">
+			<div class="skill-chip-name">/nutmeg-heal</div>
+			<div class="skill-chip-desc">Fix broken scrapers</div>
+		</div>
+		<div class="skill-chip">
+			<div class="skill-chip-name">/nutmeg-credentials</div>
+			<div class="skill-chip-desc">API key management</div>
+		</div>
+		<div class="skill-chip">
+			<div class="skill-chip-name">/nutmeg-init</div>
+			<div class="skill-chip-desc">Set up your profile</div>
+		</div>
+	</div>
+
+	<div class="section-title">Providers</div>
+
+	<table class="providers-table">
+		<thead>
+			<tr>
+				<th>Provider</th>
+				<th>Events</th>
+				<th>Stats</th>
+				<th>xG</th>
+				<th>Free?</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr><td>StatsBomb</td><td><span class="dot dot-yes"></span></td><td><span class="dot dot-yes"></span></td><td><span class="dot dot-yes"></span></td><td><span class="dot dot-partial"></span> Open data</td></tr>
+			<tr><td>Opta</td><td><span class="dot dot-yes"></span></td><td><span class="dot dot-yes"></span></td><td><span class="dot dot-yes"></span></td><td><span class="dot dot-no"></span></td></tr>
+			<tr><td>Wyscout</td><td><span class="dot dot-yes"></span></td><td><span class="dot dot-yes"></span></td><td><span class="dot dot-no"></span></td><td><span class="dot dot-no"></span></td></tr>
+			<tr><td>SportMonks</td><td><span class="dot dot-partial"></span></td><td><span class="dot dot-yes"></span></td><td><span class="dot dot-no"></span></td><td><span class="dot dot-partial"></span> Free tier</td></tr>
+			<tr><td>FBref</td><td><span class="dot dot-no"></span></td><td><span class="dot dot-yes"></span></td><td><span class="dot dot-yes"></span></td><td><span class="dot dot-yes"></span></td></tr>
+			<tr><td>Understat</td><td><span class="dot dot-no"></span></td><td><span class="dot dot-partial"></span></td><td><span class="dot dot-yes"></span></td><td><span class="dot dot-yes"></span></td></tr>
+		</tbody>
+	</table>
+
+	<div class="cta-banner">
+		<h2>Placeholder CTA headline</h2>
+		<p>Placeholder description goes here.</p>
+		<code>npx skills add withqwerty/nutmeg</code>
+	</div>
+
+	<div class="footer">
+		<p>
+			<a href="https://github.com/withqwerty/nutmeg">GitHub</a> ·
+			MIT License ·
+			Made by <a href="https://github.com/withqwerty">withqwerty</a>
+		</p>
+	</div>
+</ProductLayout>
