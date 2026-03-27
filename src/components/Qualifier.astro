@@ -1,0 +1,166 @@
+---
+// Interactive "get started" qualifier — shows tailored install instructions
+// based on user's AI tool and desired scope.
+//
+// All HTML is rendered via set:html to avoid Astro treating JSON config
+// strings (with curly braces) as template expressions.
+---
+
+<Fragment set:html={`
+<style>
+.qualifier { background: #fff; border: 2px solid #e5e5e5; border-radius: 16px; padding: 1.5rem 1.75rem; margin-bottom: 2.5rem; }
+.qualifier h2 { font-size: 1.3rem; font-weight: 900; margin-bottom: 0.25rem; }
+.qualifier > p { color: #666; font-size: 0.95rem; margin-bottom: 1.25rem; }
+.q-group { margin-bottom: 1rem; }
+.q-label { font-size: 0.85rem; font-weight: 700; margin-bottom: 0.5rem; }
+.q-options { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.q-btn { font-family: 'DM Sans', -apple-system, sans-serif; font-size: 0.85rem; font-weight: 500; padding: 0.4rem 1rem; border: 2px solid #e5e5e5; border-radius: 8px; background: #FAFAFA; color: #1a1a1a; cursor: pointer; transition: all 0.12s ease; }
+.q-btn:hover { border-color: #2D6A4F; }
+.q-btn.active { background: #2D6A4F; border-color: #2D6A4F; color: white; }
+.q-btn.active-blue { background: #1565C0; border-color: #1565C0; color: white; }
+.q-result { margin-top: 1.25rem; padding-top: 1.25rem; border-top: 1px solid #e5e5e5; }
+.q-result[hidden] { display: none; }
+.q-result-title { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #2D6A4F; margin-bottom: 0.5rem; }
+.q-step { margin-bottom: 0.75rem; }
+.q-step-num { display: inline-flex; align-items: center; justify-content: center; width: 1.4rem; height: 1.4rem; border-radius: 50%; background: #2D6A4F; color: white; font-size: 0.7rem; font-weight: 700; margin-right: 0.4rem; vertical-align: middle; }
+.q-step-num.blue { background: #1565C0; }
+.q-step p { font-size: 0.9rem; color: #666; margin-top: 0.2rem; padding-left: 2rem; }
+.q-note { font-size: 0.85rem; color: #666; margin-top: 0.75rem; padding: 0.6rem 0.8rem; background: #FAFAFA; border-radius: 8px; }
+</style>
+
+<div class="qualifier" id="get-started">
+  <h2>Get started</h2>
+  <p>Answer two questions and we'll show you exactly what to install.</p>
+
+  <div class="q-group">
+    <div class="q-label">What AI coding tool do you use?</div>
+    <div class="q-options">
+      <button class="q-btn" data-group="tool" data-value="claude-code">Claude Code</button>
+      <button class="q-btn" data-group="tool" data-value="cursor">Cursor</button>
+      <button class="q-btn" data-group="tool" data-value="vscode">VS Code / Copilot</button>
+      <button class="q-btn" data-group="tool" data-value="windsurf">Windsurf</button>
+      <button class="q-btn" data-group="tool" data-value="other">Other</button>
+    </div>
+  </div>
+
+  <div class="q-group">
+    <div class="q-label">What do you want?</div>
+    <div class="q-options">
+      <button class="q-btn" data-group="goal" data-value="full">Full toolkit (skills + docs)</button>
+      <button class="q-btn" data-group="goal" data-value="docs-only">Just the docs server</button>
+      <button class="q-btn" data-group="goal" data-value="explore">Not sure yet</button>
+    </div>
+  </div>
+
+  <div class="q-result" id="result-claude-code-full" hidden>
+    <div class="q-result-title">Your setup</div>
+    <div class="q-step"><span class="q-step-num">1</span> <code>/plugin install nutmeg@withqwerty/nutmeg</code></div>
+    <p>Run this in Claude Code. Installs 12 skills, 3 agents, and the football-docs MCP server.</p>
+    <div class="q-step"><span class="q-step-num">2</span> <code>/nutmeg-init</code></div>
+    <p>Set up your profile. Everything adapts to your language, data sources, and experience level.</p>
+    <div class="q-note">That's it. Type <code>/nutmeg-</code> to see all commands.</div>
+  </div>
+
+  <div class="q-result" id="result-claude-code-docs-only" hidden>
+    <div class="q-result-title">Your setup</div>
+    <div class="q-step"><span class="q-step-num blue">1</span> <code>claude mcp add football-docs -- npx -y football-docs</code></div>
+    <p>Adds the docs server to Claude Code. Your agent gets search_docs, list_providers, compare_providers, and request_update.</p>
+    <div class="q-note">No plugin needed. Ask Claude things like "What is Opta qualifier 76?" and it'll look it up.</div>
+  </div>
+
+  <div class="q-result" id="result-claude-code-explore" hidden>
+    <div class="q-result-title">Start with the docs server</div>
+    <div class="q-step"><span class="q-step-num blue">1</span> <code>claude mcp add football-docs -- npx -y football-docs</code></div>
+    <p>Try asking your agent football data questions. Want the full toolkit later? Run <code>/plugin install nutmeg@withqwerty/nutmeg</code>.</p>
+  </div>
+
+  <div class="q-result" id="result-cursor-full" hidden>
+    <div class="q-result-title">Your setup</div>
+    <div class="q-step"><span class="q-step-num blue">1</span> Add to Cursor MCP settings:</div>
+    <p><code>&#123;"mcpServers": &#123;"football-docs": &#123;"command": "npx", "args": ["-y", "football-docs"]&#125;&#125;&#125;</code></p>
+    <div class="q-step"><span class="q-step-num">2</span> <code>npx skills add withqwerty/nutmeg</code></div>
+    <p>Installs the 12 skills via the Agent Skills standard.</p>
+  </div>
+
+  <div class="q-result" id="result-cursor-docs-only" hidden>
+    <div class="q-result-title">Your setup</div>
+    <div class="q-step"><span class="q-step-num blue">1</span> Settings &rarr; MCP &rarr; Add server:</div>
+    <p><code>&#123;"mcpServers": &#123;"football-docs": &#123;"command": "npx", "args": ["-y", "football-docs"]&#125;&#125;&#125;</code></p>
+  </div>
+
+  <div class="q-result" id="result-vscode-full" hidden>
+    <div class="q-result-title">Your setup</div>
+    <div class="q-step"><span class="q-step-num blue">1</span> Add to <code>.vscode/mcp.json</code>:</div>
+    <p><code>&#123;"servers": &#123;"football-docs": &#123;"command": "npx", "args": ["-y", "football-docs"]&#125;&#125;&#125;</code></p>
+    <div class="q-step"><span class="q-step-num">2</span> <code>npx skills add withqwerty/nutmeg</code></div>
+    <p>Installs the 12 skills via the Agent Skills standard.</p>
+  </div>
+
+  <div class="q-result" id="result-vscode-docs-only" hidden>
+    <div class="q-result-title">Your setup</div>
+    <div class="q-step"><span class="q-step-num blue">1</span> Add to <code>.vscode/mcp.json</code>:</div>
+    <p><code>&#123;"servers": &#123;"football-docs": &#123;"command": "npx", "args": ["-y", "football-docs"]&#125;&#125;&#125;</code></p>
+  </div>
+
+  <div class="q-result" id="result-windsurf-full" hidden>
+    <div class="q-result-title">Your setup</div>
+    <div class="q-step"><span class="q-step-num blue">1</span> Add to <code>~/.codeium/windsurf/mcp_config.json</code>:</div>
+    <p><code>&#123;"mcpServers": &#123;"football-docs": &#123;"command": "npx", "args": ["-y", "football-docs"]&#125;&#125;&#125;</code></p>
+    <div class="q-step"><span class="q-step-num">2</span> <code>npx skills add withqwerty/nutmeg</code></div>
+    <p>Installs the 12 skills via the Agent Skills standard.</p>
+  </div>
+
+  <div class="q-result" id="result-windsurf-docs-only" hidden>
+    <div class="q-result-title">Your setup</div>
+    <div class="q-step"><span class="q-step-num blue">1</span> Add to <code>~/.codeium/windsurf/mcp_config.json</code>:</div>
+    <p><code>&#123;"mcpServers": &#123;"football-docs": &#123;"command": "npx", "args": ["-y", "football-docs"]&#125;&#125;&#125;</code></p>
+  </div>
+
+  <div class="q-result" id="result-other-full" hidden>
+    <div class="q-result-title">Your setup</div>
+    <div class="q-step"><span class="q-step-num blue">1</span> Add <code>npx -y football-docs</code> as an MCP server (stdio transport)</div>
+    <p>Check your tool's docs for how to configure MCP servers.</p>
+    <div class="q-step"><span class="q-step-num">2</span> <code>npx skills add withqwerty/nutmeg</code></div>
+    <p>Skills work with any tool supporting the <a href="https://agentskills.io">Agent Skills</a> standard.</p>
+  </div>
+
+  <div class="q-result" id="result-other-docs-only" hidden>
+    <div class="q-result-title">Your setup</div>
+    <div class="q-step"><span class="q-step-num blue">1</span> Add <code>npx -y football-docs</code> as an MCP server (stdio transport)</div>
+    <p>Any MCP-compatible tool can connect.</p>
+  </div>
+
+  <div class="q-result" id="result-generic-explore" hidden>
+    <div class="q-result-title">Start with the docs server</div>
+    <div class="q-step"><span class="q-step-num blue">1</span> Add <code>npx -y football-docs</code> as an MCP server in your tool's settings</div>
+    <p>Try asking your agent football data questions. Want skills too? Run <code>npx skills add withqwerty/nutmeg</code>.</p>
+  </div>
+</div>
+
+<script>
+var toolChoice = null;
+var goalChoice = null;
+document.querySelectorAll('.q-btn').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    var group = btn.dataset.group;
+    var value = btn.dataset.value;
+    var isGoal = group === 'goal';
+    document.querySelectorAll('.q-btn[data-group="' + group + '"]').forEach(function(b) {
+      b.classList.remove('active', 'active-blue');
+    });
+    btn.classList.add(isGoal ? 'active-blue' : 'active');
+    if (group === 'tool') toolChoice = value;
+    if (group === 'goal') goalChoice = value;
+    document.querySelectorAll('.q-result').forEach(function(r) { r.hidden = true; });
+    if (!toolChoice || !goalChoice) return;
+    if (goalChoice === 'explore' && toolChoice !== 'claude-code') {
+      document.getElementById('result-generic-explore').hidden = false;
+      return;
+    }
+    var id = 'result-' + toolChoice + '-' + goalChoice;
+    var el = document.getElementById(id);
+    if (el) el.hidden = false;
+  });
+});
+</script>
+`} />
