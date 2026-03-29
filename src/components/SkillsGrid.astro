@@ -2,14 +2,16 @@
 interface Props {
 	skills: Array<{ name: string; desc: string }>;
 	color?: 'green' | 'blue';
+	variant?: 'entry' | 'default';
 }
 
-const { skills, color = 'green' } = Astro.props;
+const { skills, color = 'green', variant = 'default' } = Astro.props;
+const isEntry = variant === 'entry';
 ---
 
-<div class="skills-grid">
+<div class={`skills-grid ${isEntry ? 'entry' : ''}`}>
 	{skills.map(({ name, desc }) => (
-		<div class={`skill-chip ${color}`}>
+		<div class={`skill-chip ${color} ${isEntry ? 'entry' : ''}`}>
 			<div class={`skill-chip-name ${color}`}>{name}</div>
 			<div class="skill-chip-desc">{desc}</div>
 		</div>
@@ -24,12 +26,24 @@ const { skills, color = 'green' } = Astro.props;
 		margin-bottom: 2rem;
 	}
 
+	.skills-grid.entry {
+		grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+		gap: 1rem;
+	}
+
 	.skill-chip {
 		background: var(--card-bg);
 		border: 2px solid var(--border);
 		border-radius: 12px;
 		padding: 0.75rem 1rem;
 		transition: border-color 0.15s;
+	}
+
+	.skill-chip.entry {
+		padding: 1rem 1.25rem;
+		border-width: 2px;
+		border-color: var(--green);
+		background: #f0faf4;
 	}
 
 	.skill-chip.green:hover { border-color: var(--green); }
@@ -40,11 +54,19 @@ const { skills, color = 'green' } = Astro.props;
 		font-weight: 700;
 	}
 
+	.skill-chip.entry .skill-chip-name {
+		font-size: 0.95rem;
+	}
+
 	.skill-chip-name.green { color: var(--green); }
 
 	.skill-chip-desc {
 		font-size: 0.82rem;
 		color: var(--fg-muted);
 		margin-top: 0.2rem;
+	}
+
+	.skill-chip.entry .skill-chip-desc {
+		font-size: 0.88rem;
 	}
 </style>

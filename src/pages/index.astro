@@ -13,19 +13,20 @@ import ProvidersGrid from '../components/ProvidersGrid.astro';
 import CtaBanner from '../components/CtaBanner.astro';
 import Footer from '../components/Footer.astro';
 
-const skills = [
-	{ name: '/nutmeg-acquire', desc: 'Fetch data from any source' },
+const entrySkills = [
+	{ name: '/nutmeg', desc: 'Describe what you want — it handles the rest' },
+	{ name: '/nutmeg-learn', desc: 'Concepts, resources, provider docs' },
+];
+
+const subSkills = [
+	{ name: '/nutmeg-acquire', desc: 'Fetch data and manage API keys' },
 	{ name: '/nutmeg-wrangle', desc: 'Transform and reshape data' },
 	{ name: '/nutmeg-compute', desc: 'Derived metrics (xG, PPDA...)' },
 	{ name: '/nutmeg-analyse', desc: 'Explore and interpret data' },
 	{ name: '/nutmeg-brainstorm', desc: 'Visualisation ideation' },
 	{ name: '/nutmeg-review', desc: 'Check data code and charts' },
-	{ name: '/nutmeg-providers', desc: 'Search provider docs' },
 	{ name: '/nutmeg-store', desc: 'Storage and publishing' },
-	{ name: '/nutmeg-learn', desc: 'Concepts, papers, courses' },
 	{ name: '/nutmeg-heal', desc: 'Fix broken scrapers' },
-	{ name: '/nutmeg-credentials', desc: 'API key management' },
-	{ name: '/nutmeg-init', desc: 'Set up your profile' },
 ];
 
 const dataProviders = [
@@ -92,8 +93,11 @@ const footerLinks = [
 
 		<Qualifier />
 
-		<div class="section-title green">Skills</div>
-		<SkillsGrid skills={skills} />
+		<div class="section-title green">Start here</div>
+		<SkillsGrid skills={entrySkills} variant="entry" />
+
+		<div class="section-title green muted">Sub-skills <span class="section-subtitle">auto-dispatched or called directly</span></div>
+		<SkillsGrid skills={subSkills} />
 
 		<div class="section-title green">Providers</div>
 		<ProvidersTable providers={dataProviders} />

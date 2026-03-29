@@ -54,6 +54,8 @@ code {
 
 .section-title.green { color: var(--green); }
 .section-title.blue { color: var(--blue); }
+.section-title.muted { color: var(--fg-muted); }
+.section-subtitle { font-weight: 400; text-transform: none; letter-spacing: 0; font-size: 0.78rem; }
 
 /* Divider */
 .product-divider {
