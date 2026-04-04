@@ -12,7 +12,7 @@ const { links, credit } = Astro.props;
 		{links.map(({ href, label }, i) => (
 			<>{i > 0 && ' · '}<a href={href}>{label}</a></>
 		))}
-		{credit && <>{' · '}{credit}</>}
+		{credit && <>{' · '}Made by <a href="https://www.withqwerty.com">withqwerty</a></>}
 	</p>
 </div>
 
