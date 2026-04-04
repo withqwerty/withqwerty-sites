@@ -1,34 +1,24 @@
 # nutmeg-site
 
-Marketing/landing page for the nutmeg Claude Code plugin. Built with Astro 6, static output.
+Landing page for the [nutmeg](https://github.com/withqwerty/nutmeg) Claude Code plugin. Astro static site deployed to Cloudflare Pages (project: `nutmeg-site`).
 
-## Stack
+Live at: https://nutmeg.withqwerty.com
 
-- Astro 6 (static output, no SSR)
-- pnpm
-- Node >= 22.12.0
+## Commands
+
+```bash
+pnpm dev           # Local dev server
+pnpm build         # Build to dist/
+pnpm deploy        # Build + deploy to Cloudflare Pages
+```
+
+GitHub auto-deploy is not connected. Use `pnpm deploy` to push changes live.
 
 ## Structure
 
-```
-src/
-  pages/index.astro      # Single page — all data arrays (skills, providers, queries) defined here
-  layouts/BaseLayout.astro
-  components/             # Hero, SkillsGrid, ProvidersGrid, ExampleQueries, InstallRow, etc.
-  styles/global.css
-```
-
-## Deploy
-
-Static site hosted on Cloudflare Pages. No wrangler config — deploy manually:
-
-```
-pnpm build && npx wrangler pages deploy dist --project-name=nutmeg-site
-```
+Single-page site: `src/pages/index.astro`. Data arrays (skills, providers, queries) defined at the top of that file. Components in `src/components/`, global styles in `src/styles/global.css`.
 
 ## Conventions
 
-- Single-page site — all content lives in `src/pages/index.astro`
-- Components are pure Astro (no JS framework)
+- Components are pure Astro (no JS framework, no client-side JS)
 - Skill names and descriptions must match the nutmeg plugin (`../nutmeg/skills/`)
-- No client-side JavaScript unless absolutely necessary
