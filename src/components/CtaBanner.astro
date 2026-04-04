@@ -3,16 +3,20 @@ interface Props {
 	headline: string;
 	description: string;
 	code: string;
+	code2?: string;
 	color?: 'green' | 'blue';
 }
 
-const { headline, description, code, color = 'green' } = Astro.props;
+const { headline, description, code, code2, color = 'green' } = Astro.props;
 ---
 
 <div class={`cta-banner ${color}`}>
 	<h2>{headline}</h2>
 	<p>{description}</p>
-	<code>{code}</code>
+	<div class="cta-codes">
+		<code>{code}</code>
+		{code2 && <code>{code2}</code>}
+	</div>
 </div>
 
 <style>
@@ -29,5 +33,6 @@ const { headline, description, code, color = 'green' } = Astro.props;
 
 	.cta-banner h2 { font-size: 1.5rem; font-weight: 900; margin-bottom: 0.5rem; }
 	.cta-banner p { opacity: 0.8; margin-bottom: 1rem; }
+	.cta-codes { display: flex; flex-direction: column; align-items: center; gap: 0.4rem; }
 	.cta-banner code { background: rgba(255,255,255,0.15); color: white; font-size: 0.9rem; padding: 0.3rem 0.8rem; border-radius: 6px; }
 </style>
